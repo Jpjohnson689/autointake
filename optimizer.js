@@ -49,7 +49,7 @@ Respond in EXACTLY this JSON format:
 }`;
 
   const response = await client.messages.create({
-    model: "claude-sonnet-4-20250514",
+    model: "claude-haiku-3-5-20241022",
     max_tokens: 1000,
     messages: [{ role: "user", content: prompt }]
   });
