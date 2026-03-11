@@ -48,7 +48,7 @@ Respond in EXACTLY this JSON format, nothing else:
 {"completion_rate": 0.0, "lead_satisfaction": 0.0, "efficiency": 0.0, "objection_handling": 0.0, "did_complete": 0, "name_captured": 0, "fields_captured": ["list", "of", "captured", "fields"], "notes": "one sentence summary"}`;
 
   const response = await client.messages.create({
-    model: "claude-sonnet-4-20250514",
+    model: "claude-haiku-3-5-20241022",
     max_tokens: 500,
     messages: [{ role: "user", content: evalPrompt }]
   });
@@ -96,20 +96,3 @@ function aggregateScores(evaluations) {
   return {
     composite: avg("composite"),
     completion_rate: avg("completion_rate"),
-    did_complete: avg("did_complete"),
-    lead_satisfaction: avg("lead_satisfaction"),
-    efficiency: avg("efficiency"),
-    objection_handling: avg("objection_handling"),
-    name_captured: avg("name_captured"),
-    n_personas: n,
-    per_persona: evaluations.map(e => ({
-      persona: e.persona,
-      composite: e.scores.composite,
-      did_complete: e.scores.did_complete,
-      name_captured: e.scores.name_captured,
-      notes: e.scores.notes
-    }))
-  };
-}
-
-module.exports = { evaluateConversation, aggregateScores };
