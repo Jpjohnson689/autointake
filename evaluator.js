@@ -96,3 +96,20 @@ function aggregateScores(evaluations) {
   return {
     composite: avg("composite"),
     completion_rate: avg("completion_rate"),
+    did_complete: avg("did_complete"),
+    lead_satisfaction: avg("lead_satisfaction"),
+    efficiency: avg("efficiency"),
+    objection_handling: avg("objection_handling"),
+    name_captured: avg("name_captured"),
+    n_personas: n,
+    per_persona: evaluations.map(e => ({
+      persona: e.persona,
+      composite: e.scores.composite,
+      did_complete: e.scores.did_complete,
+      name_captured: e.scores.name_captured,
+      notes: e.scores.notes
+    }))
+  };
+}
+
+module.exports = { evaluateConversation, aggregateScores };
