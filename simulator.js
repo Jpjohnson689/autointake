@@ -40,7 +40,7 @@ RULES:
   while (turnCount < config.maxTurns) {
     // 1. Persona responds
     const personaResponse = await client.messages.create({
-      model: "claude-sonnet-4-20250514",
+      model: "claude-haiku-3-5-20241022",
       max_tokens: 300,
       system: personaSystem,
       messages: personaMessages
@@ -73,7 +73,7 @@ RULES:
     botMessages.push({ role: "user", content: cleanPersonaText });
 
     const botResponse = await client.messages.create({
-      model: "claude-sonnet-4-20250514",
+      model: "claude-haiku-3-5-20241022",
       max_tokens: 400,
       system: botSystemPrompt,
       messages: botMessages
