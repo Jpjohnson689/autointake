@@ -1,4 +1,4 @@
-—// config.js — Current intake flow configuration
+// config.js - Current intake flow configuration
 // This is the file the optimizer modifies. Everything else is fixed.
 
 const DEFAULT_CONFIG = {
