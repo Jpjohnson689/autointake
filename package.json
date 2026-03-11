@@ -1,0 +1,14 @@
+{
+    "name": "autointake",
+    "version": "1.0.0",
+    "description": "Autoresearch-style optimization loop for AI Intake conversational lead capture",
+    "main": "runner.js",
+    "scripts": {
+          "single": "node runner.js --experiments=1",
+          "start": "node runner.js --experiments=5",
+          "overnight": "node runner.js --experiments=100"
+    },
+    "dependencies": {
+          "@anthropic-ai/sdk": "^0.39.0"
+    }
+}
