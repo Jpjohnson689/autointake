@@ -1,8 +1,8 @@
-// simulator.js — Conversation simulator using Claude API
+// simulator.js — Conversation simulator using Claude API (v2.0)
 // Runs one persona through the intake flow and returns the transcript
+// v2.0: Injects company identity into bot system prompt, improved persona context
 
 const Anthropic = require("@anthropic-ai/sdk");
-
 const client = new Anthropic();
 
 async function simulateConversation(config, persona) {
@@ -11,6 +11,13 @@ async function simulateConversation(config, persona) {
 
   // Bot sends opening message
   transcript.push({ role: "bot", content: config.openingMessage });
+
+  // Build the bot's full system prompt with company context
+  const companyContext = config.companyInfo
+    ? `\nCOMPANY CONTEXT: You work for ${config.companyInfo.name}. ${config.companyInfo.tagline}. ${config.companyInfo.credentials}. Services offered: ${config.companyInfo.services.join(", ")}. ${config.companyInfo.responseTime}.\n`
+    : "";
+  
+  const botSystemPrompt = config.systemPrompt + companyContext;
 
   // Build the persona's system prompt
   const personaSystem = `${persona.behavior}
@@ -62,13 +69,13 @@ RULES:
       break;
     }
 
-    // 2. Bot responds
+    // 2. Bot responds (using enriched system prompt with company context)
     botMessages.push({ role: "user", content: cleanPersonaText });
 
     const botResponse = await client.messages.create({
       model: "claude-sonnet-4-20250514",
       max_tokens: 400,
-      system: config.systemPrompt,
+      system: botSystemPrompt,
       messages: botMessages
     });
 
